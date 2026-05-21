@@ -179,3 +179,36 @@ LLMs over-balance RU lists. Each bullet has the same grammatical structure, same
 Russian sentences average 12–18 words in good native prose. AI-generated RU tends toward 20–30 words with subordinate clauses. Break them up.
 
 Target distribution: ~30% short (5–10 words), ~50% medium (11–18), ~20% longer (19–25). Almost never 25+ words in social/web copy.
+
+---
+
+## TELL-CORPRU-011 · Translation-shape sentences (hard rule)
+
+**Hard rule:** When the target language is Russian, never produce text by translating an English draft. Write as a native Russian speaker thinking in Russian from scratch.
+
+**Why:** Even when individual words are correct and no specific TELL fires, sentence *shape* gives away a translation. Russian and English distribute information through a sentence differently. A grammatically valid sentence translated word-for-word reads as machine output to any native ear.
+
+**Symptoms of translation-shape (each one is a fix target):**
+
+1. **English-style apposition with em-dash.** EN: "It's a humanizer — a Claude Code skill that…". RU translation-shape: «Это хьюманайзер — скилл для Claude Code, который…». RU native: «Это хьюманайзер для AI-текстов. Скилл живёт в Claude Code: берёт текст и переписывает».
+2. **Mirrored parallel structures.** EN: "They caught X. They missed Y. They didn't handle Z." RU translation-shape: «Они ловят X. Они пропускают Y. Они не справляются с Z». RU native: «X они ловят. А вот с Y — беда. И ещё ни Z, ни …».
+3. **Preserved EN word order with adjective-first.** EN: "real open-source release". RU translation-shape: «настоящий open-source релиз» can be fine, but «первый настоящий open-source релиз» mirrors EN exactly. RU native often inverts or breaks: «первый настоящий релиз, и сразу в open-source».
+4. **Anglicism connectors.** «При этом», «более того», «в то же время» as paragraph glue often comes from "Moreover", "Additionally", "At the same time". RU native uses «А», «Тогда», «Зато», «Кстати», «И ещё», «Получается», direct juxtaposition, or rhetorical questions.
+5. **Listing pattern.** EN listing: "no X, no Y, no Z". RU native equivalent is «ни X, ни Y, ни Z» (genitive after «ни»), NOT «нет X, нет Y, нет Z» — the latter is a calque.
+6. **English-style colon as setup.** EN: "Here's what changed: …". RU translation-shape: «Вот что изменилось: …». RU native: «А изменилось вот что: …» or restructure into normal narrative («Теперь там …»).
+7. **Past-tense action chains as comma-joined verbs.** EN: "I forked, kept, and built on top." Translation-shape: «Я форкнул, оставил и достроил». Works but feels listy. RU native often slows down with a connector: «Я взял этот скилл, оставил то, что работает, и достроил всё остальное».
+8. **Missing Russian particles.** Native RU prose uses «-то», «же», «ведь», «вот», «уж», «всё-таки», «ну» strategically. AI translation strips them. Reintroduce where the meaning calls for emphasis or topic-marking.
+
+**Process (when target is RU and a source EN draft exists):**
+
+1. Read the EN draft once. Close it.
+2. Restate the *meaning* of each paragraph in your head in Russian, without looking at the EN.
+3. Write the RU version from that mental restatement, sentence by sentence, choosing native sentence shapes — not preserving EN clause boundaries.
+4. After drafting, re-read with the EN draft open in another mental window and check: does any RU sentence track its EN counterpart 1:1 in clause structure? If yes → restructure that sentence.
+5. Read the RU draft aloud (or silently with a Russian ear). If any sentence sounds like «переведённое», rewrite.
+
+**Bad (translation-shape):**
+> «Это хьюманайзер для AI-текстов — скилл для Claude Code, который ловит признаки сгенерированного текста и переписывает так, чтобы читалось как живая речь. Я начал с того, что попробовал все публичные хьюманайзеры. Очевидное они ловят: переизбыток тире, штампы. Русский язык — мимо.»
+
+**Better (native-shape):**
+> «Это хьюманайзер для AI-текстов. Скилл живёт в Claude Code: берёт текст, написанный нейросетью, и переписывает так, чтобы было похоже, что писал человек. Я перепробовал все open-source хьюманайзеры, до которых смог дотянуться. Очевидные штампы они все ловят: бесконечные тире, «в современном динамичном мире», рубленые «Чётко. Кратко. Эффективно.». А вот с русским — беда.»
